@@ -1,11 +1,14 @@
-import "./App.css";
+import React from "react";
+import Navbar from "./components/Navbar";
+import Employee from "./components/Employee";
 
-const App = () => {
+function App() {
   return (
     <div className="App">
-      <h1>Welcome to React!</h1>
+      <Navbar />
+      <Employee />
     </div>
   );
-};
+}
 
 export default App;
