@@ -1,12 +1,27 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Employee from "./components/Employee";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AddEmployee from "./components/AddEmployee";
+import EmployeeList from "./components/EmployeeList";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Employee />
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<EmployeeList />} />
+          <Route path="/employeeList" element={<EmployeeList />} />
+          <Route index element={<EmployeeList />} />
+          <Route path="/addEmployee" element={<AddEmployee />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
