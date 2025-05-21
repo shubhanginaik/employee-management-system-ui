@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EmployeeService from "../services/EmployeeService";
+import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -7,6 +8,8 @@ const AddEmployee = () => {
     lastName: "",
     email: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,15 +21,32 @@ const AddEmployee = () => {
 
   const saveEmployee = (e) => {
     e.preventDefault();
+    // Validate the form
+    if (
+      !employee.firstName?.trim() ||
+      !employee.lastName?.trim() ||
+      !employee.email?.trim()
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
     EmployeeService.saveEmployee(employee)
       .then((response) => {
         console.log(response.data);
-        alert("Employee added successfully");
+        navigate("/employeeList");
       })
       .catch((error) => {
         console.log(error);
         alert("Error adding employee");
       });
+  };
+  const reset = (e) => {
+    e.preventDefault();
+    setEmployee({
+      firstName: "",
+      lastName: "",
+      email: "",
+    });
   };
 
   return (
@@ -89,7 +109,10 @@ const AddEmployee = () => {
           >
             Save
           </button>
-          <button className=" bg-red-400 text-white font-semibold py-2 px-4 rounded cursor-pointer hover:bg-red-500 ">
+          <button
+            onClick={reset}
+            className=" bg-red-400 text-white font-semibold py-2 px-4 rounded cursor-pointer hover:bg-red-500 "
+          >
             clear
           </button>
         </div>

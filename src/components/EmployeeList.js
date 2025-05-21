@@ -16,6 +16,7 @@ const EmployeeList = () => {
         const response = await EmployeeService.getEmployees();
 
         setEmployees(response.data);
+        console.log("Employees fetched successfully:", response.data);
       } catch (error) {
         setError(error);
         console.log("Error fetching data:", error);
@@ -24,6 +25,22 @@ const EmployeeList = () => {
     };
     fetchData();
   }, []);
+
+  const deleteEmployee = (e, id) => {
+    e.preventDefault();
+    EmployeeService.deleteEmployee(id)
+      .then((response) => {
+        if (employees) {
+          setEmployees((prevEmployees) =>
+            prevEmployees.filter((employee) => employee.empId !== id)
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Error deleting employee");
+      });
+  };
 
   return (
     <div className="container mx-auto my-8">
@@ -74,7 +91,8 @@ const EmployeeList = () => {
               {employees.map((employee, index) => (
                 <Employee
                   employee={employee}
-                  key={employee.id || `employee-${index}`}
+                  deleteEmployee={deleteEmployee}
+                  key={employee.empId || index}
                 />
               ))}
             </tbody>
