@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddEmployee from "./components/AddEmployee";
 import EmployeeList from "./components/EmployeeList";
+import EditEmployee from "./components/EditEmployee";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/employeeList" element={<EmployeeList />} />
           <Route index element={<EmployeeList />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
+          <Route path="/editEmployee/:id" element={<EditEmployee />} />
         </Routes>
       </BrowserRouter>
     </div>
